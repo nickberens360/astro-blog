@@ -50,7 +50,10 @@ def convert_lists_to_paragraphs(content):
 
     To:
     • Item 1
+
     • Item 2
+
+    (with blank lines so each bullet becomes a separate <p> tag)
     """
     lines = content.split('\n')
     result = []
@@ -67,6 +70,8 @@ def convert_lists_to_paragraphs(content):
                 item_text = match.group(2)
                 # Use bullet point instead of dash
                 result.append(f'• {item_text}')
+                # Add blank line after each bullet so it becomes separate <p> in HTML
+                result.append('')
         elif re.match(r'^[\s]*\d+\.\s+(.+)', line):
             # Ordered list item - keep the number
             match = re.match(r'^[\s]*(\d+)\.\s+(.+)', line)
@@ -74,6 +79,8 @@ def convert_lists_to_paragraphs(content):
                 number = match.group(1)
                 item_text = match.group(2)
                 result.append(f'{number}. {item_text}')
+                # Add blank line after each numbered item
+                result.append('')
         else:
             # Not a list item, keep as is
             result.append(line)
