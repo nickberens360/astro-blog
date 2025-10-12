@@ -21,6 +21,25 @@ def create_slug(title):
     return slug.strip('-')[:60]
 
 
+def strip_duplicate_title(content, title):
+    """
+    Remove first H1 heading if it matches the title
+    This prevents duplicate H1 tags (one in frontmatter, one in content)
+    """
+    # Match first H1 (# Title or # Title with trailing #)
+    pattern = r'^#\s+(.+?)(?:\s+#*)?\s*\n'
+    match = re.match(pattern, content.strip(), re.MULTILINE)
+
+    if match:
+        heading_text = match.group(1).strip()
+        # Remove if it matches title (case-insensitive)
+        if heading_text.lower() == title.lower():
+            content = re.sub(pattern, '', content.strip(), count=1)
+            return content.lstrip()
+
+    return content
+
+
 def make_images_absolute(content, blog_url):
     """
     Convert relative image URLs to absolute URLs
@@ -74,6 +93,9 @@ def publish_article(article_data):
 
     # Get blog URL for absolute image paths
     blog_url = os.getenv('BLOG_URL', 'http://localhost:4321')
+
+    # Remove duplicate H1 if present (template already renders title as H1)
+    content = strip_duplicate_title(content, title)
 
     # Convert relative image URLs to absolute URLs
     # This prevents broken images when Medium imports the article
