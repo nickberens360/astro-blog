@@ -1,7 +1,7 @@
 ---
 title: "7 ChatGPT Commands Every New User Should Know"
-description: "# 7 ChatGPT Commands Every New User Should Know  Getting started with ChatGPT can feel overwhelming. While the interface seems simple, knowing the right command"
-pubDate: 2025-10-12T15:50:53.382628
+description: "Essential ChatGPT commands and prompting techniques for beginners to get better results"
+pubDate: 2025-10-12T16:05:45.440891
 tags: ["ai", "chatgpt", "tips"]
 draft: false
 ---
