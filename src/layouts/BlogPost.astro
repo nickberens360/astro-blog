@@ -39,7 +39,7 @@ const canonicalUrl = slug ? `${siteUrl}/blog/${slug}` : siteUrl;
     {tags.map(tag => <meta property="article:tag" content={tag} />)}
 
     <!-- Clean styling optimized for Medium import -->
-    <style>
+    <style is:global>
       * {
         margin: 0;
         padding: 0;
