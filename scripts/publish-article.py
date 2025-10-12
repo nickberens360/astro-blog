@@ -40,6 +40,49 @@ def strip_duplicate_title(content, title):
     return content
 
 
+def convert_lists_to_paragraphs(content):
+    """
+    Convert markdown lists to bullet paragraph format for Medium compatibility
+
+    Medium's importer doesn't handle <ul><li> well, so we convert:
+    - Item 1
+    - Item 2
+
+    To:
+    • Item 1
+    • Item 2
+    """
+    lines = content.split('\n')
+    result = []
+    i = 0
+
+    while i < len(lines):
+        line = lines[i]
+
+        # Check if this is a list item (unordered: -, *, + or ordered: 1. 2. etc)
+        if re.match(r'^[\s]*[-\*\+]\s+(.+)', line):
+            # Unordered list item
+            match = re.match(r'^[\s]*([-\*\+])\s+(.+)', line)
+            if match:
+                item_text = match.group(2)
+                # Use bullet point instead of dash
+                result.append(f'• {item_text}')
+        elif re.match(r'^[\s]*\d+\.\s+(.+)', line):
+            # Ordered list item - keep the number
+            match = re.match(r'^[\s]*(\d+)\.\s+(.+)', line)
+            if match:
+                number = match.group(1)
+                item_text = match.group(2)
+                result.append(f'{number}. {item_text}')
+        else:
+            # Not a list item, keep as is
+            result.append(line)
+
+        i += 1
+
+    return '\n'.join(result)
+
+
 def make_images_absolute(content, blog_url):
     """
     Convert relative image URLs to absolute URLs
@@ -96,6 +139,9 @@ def publish_article(article_data):
 
     # Remove duplicate H1 if present (template already renders title as H1)
     content = strip_duplicate_title(content, title)
+
+    # Convert markdown lists to bullet paragraphs for Medium compatibility
+    content = convert_lists_to_paragraphs(content)
 
     # Convert relative image URLs to absolute URLs
     # This prevents broken images when Medium imports the article
