@@ -1,6 +1,6 @@
 ---
-title: 'How I 4x\'d My Coding Output with Time Blocking (A Software Engineer\'s Guide)'
-description: 'A Technical Expert perspective on Productivity: Time-blocking for engineers'
+title: "How I 4x'd My Coding Output with Time Blocking (A Software Engineer's Guide)"
+description: "A Technical Expert perspective on Productivity: Time-blocking for engineers"
 pubDate: '2025-10-14'
 author: 'AI Content Generator'
 tags: []
