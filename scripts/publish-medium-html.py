@@ -57,13 +57,25 @@ def publish_medium_html(html_content: str, article_data: dict) -> dict:
         os.chdir(repo_root)
 
         subprocess.run(['git', 'add', str(filepath)], check=True)
-        subprocess.run(
-            ['git', 'commit', '-m', f'Add Medium import HTML: {title}'],
-            check=True
-        )
-        subprocess.run(['git', 'push'], check=True)
 
-        print("✓ Pushed to GitHub")
+        # Check if there are changes to commit
+        status_result = subprocess.run(
+            ['git', 'status', '--porcelain', str(filepath)],
+            capture_output=True,
+            text=True
+        )
+
+        if status_result.stdout.strip():
+            # There are changes, commit them
+            subprocess.run(
+                ['git', 'commit', '-m', f'Add Medium import HTML: {title}'],
+                check=True
+            )
+            subprocess.run(['git', 'push'], check=True)
+            print("✓ Pushed to GitHub")
+        else:
+            # No changes, file already exists and is unchanged
+            print("✓ File already up to date (no changes to commit)")
 
         # Construct URL
         medium_url = f"{blog_url}/medium-imports/{filename}"

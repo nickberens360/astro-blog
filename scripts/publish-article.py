@@ -192,10 +192,22 @@ draft: false
         os.chdir(repo_root)
 
         subprocess.run(['git', 'add', str(filepath)], check=True)
-        subprocess.run(['git', 'commit', '-m', f'Add article: {title}'], check=True)
-        subprocess.run(['git', 'push'], check=True)
 
-        print("✓ Pushed to GitHub")
+        # Check if there are changes to commit
+        status_result = subprocess.run(
+            ['git', 'status', '--porcelain', str(filepath)],
+            capture_output=True,
+            text=True
+        )
+
+        if status_result.stdout.strip():
+            # There are changes, commit them
+            subprocess.run(['git', 'commit', '-m', f'Add article: {title}'], check=True)
+            subprocess.run(['git', 'push'], check=True)
+            print("✓ Pushed to GitHub")
+        else:
+            # No changes, file already exists and is unchanged
+            print("✓ File already up to date (no changes to commit)")
 
         # Construct URL
         article_url = f"{blog_url}/blog/{slug}"
