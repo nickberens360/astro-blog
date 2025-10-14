@@ -1,7 +1,7 @@
 ---
 title: "How to Create Your First AI Art in Midjourney: A Step-by-Step Guide"
 description: "# How to Create Your First AI Art in Midjourney: A Step-by-Step Guide  Picture this: You've just seen stunning AI-generated artwork online - ethereal landscapes"
-pubDate: 2025-10-14T15:27:20.578345
+pubDate: 2025-10-14T15:27:22.099204
 tags: ["ai", "midjourney", "image-generation"]
 draft: false
 ---
