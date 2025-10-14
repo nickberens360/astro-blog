@@ -1,7 +1,7 @@
 ---
 title: "Midjourney AI Art: A Beginner's Guide to Creating Your First Images"
 description: "# Midjourney AI Art: A Beginner's Guide to Creating Your First Images  Creating AI art with Midjourney can feel overwhelming at first, but we've broken down the"
-pubDate: 2025-10-14T07:49:25.367201
+pubDate: 2025-10-14T07:49:26.951185
 tags: ["ai", "midjourney", "tutorial"]
 draft: false
 ---
