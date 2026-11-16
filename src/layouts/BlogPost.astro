@@ -4,17 +4,19 @@ export interface Props {
   description: string;
   pubDate: Date;
   tags?: string[];
+  slug?: string;
 }
 
-const { title, description, pubDate, tags = [] } = Astro.props;
+const { title, description, pubDate, tags = [], slug } = Astro.props;
 const formattedDate = pubDate.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric'
 });
 
-// Canonical URL: this page's own path on the configured site (astro.config.mjs `site`)
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+// Construct canonical URL
+const siteUrl = import.meta.env.SITE || 'https://your-site.netlify.app';
+const canonicalUrl = slug ? `${siteUrl}/blog/${slug}` : siteUrl;
 ---
 
 <!DOCTYPE html>
@@ -159,46 +161,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
         height: auto;
         margin: 1.5rem 0;
       }
-
-      details {
-        position: relative;
-        border: 1px solid #e1e4e8;
-        border-radius: 6px;
-        padding: 0.75rem 1rem;
-        margin-bottom: 1.5rem;
-        background: #fafbfc;
-      }
-
-      details[open] {
-        padding-bottom: 0.25rem;
-      }
-
-      summary {
-        cursor: pointer;
-        padding-right: 5rem;
-      }
-
-      details[open] > summary {
-        margin-bottom: 1rem;
-      }
-
-      .copy-btn {
-        position: absolute;
-        top: 0.6rem;
-        right: 0.75rem;
-        font: inherit;
-        font-size: 0.8rem;
-        padding: 0.2rem 0.6rem;
-        border: 1px solid #d0d7de;
-        border-radius: 4px;
-        background: #fff;
-        color: #333;
-        cursor: pointer;
-      }
-
-      .copy-btn:hover {
-        background: #f3f4f6;
-      }
     </style>
   </head>
   <body>
@@ -214,41 +176,5 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
       </div>
       <slot />
     </article>
-    <script>
-      // Add a copy button to every accordion marked with data-copy.
-      // If the accordion holds a code block, copy that; otherwise copy its text.
-      document.querySelectorAll('article details[data-copy]').forEach((details) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'copy-btn';
-        button.textContent = 'Copy';
-        button.addEventListener('click', async (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          const pre = details.querySelector('pre');
-          let text;
-          if (pre) {
-            text = pre.textContent ?? '';
-          } else {
-            const wasOpen = details.open;
-            details.open = true;
-            text = Array.from(details.children)
-              .filter((el) => el.tagName !== 'SUMMARY' && !el.classList.contains('copy-btn'))
-              .map((el) => (el as HTMLElement).innerText)
-              .join('\n\n');
-            details.open = wasOpen;
-          }
-          try {
-            await navigator.clipboard.writeText(text.trim());
-            button.textContent = 'Copied';
-          } catch {
-            button.textContent = 'Copy failed';
-          }
-          setTimeout(() => (button.textContent = 'Copy'), 2000);
-        });
-        // Inside the summary so it stays visible while the accordion is closed.
-        details.querySelector('summary')?.appendChild(button);
-      });
-    </script>
   </body>
 </html>

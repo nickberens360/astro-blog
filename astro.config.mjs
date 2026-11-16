@@ -9,7 +9,7 @@ import rehypeRemoveCodeClasses from './rehype-remove-code-classes.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://nickberens.me',
+	site: 'https://example.com',
 	output: 'static',
 	adapter: netlify(),
 	integrations: [mdx(), sitemap()],
