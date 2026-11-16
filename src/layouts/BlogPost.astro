@@ -4,19 +4,17 @@ export interface Props {
   description: string;
   pubDate: Date;
   tags?: string[];
-  slug?: string;
 }
 
-const { title, description, pubDate, tags = [], slug } = Astro.props;
+const { title, description, pubDate, tags = [] } = Astro.props;
 const formattedDate = pubDate.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric'
 });
 
-// Construct canonical URL
-const siteUrl = import.meta.env.SITE || 'https://your-site.netlify.app';
-const canonicalUrl = slug ? `${siteUrl}/blog/${slug}` : siteUrl;
+// Canonical URL: this page's own path on the configured site (astro.config.mjs `site`)
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!DOCTYPE html>
