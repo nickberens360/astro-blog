@@ -4,9 +4,3 @@
 
 [build.environment]
   NODE_VERSION = "20"
-
-# Astro's sitemap integration writes sitemap-index.xml; send the conventional URL there.
-[[redirects]]
-  from = "/sitemap.xml"
-  to = "/sitemap-index.xml"
-  status = 301
