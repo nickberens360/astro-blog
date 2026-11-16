@@ -3,7 +3,7 @@ title: "Teaching an Embedded AI Agent What It Can Do"
 description: "A page-scoped tool registry and context snapshot pattern for adding an AI agent to an existing Vue/Nuxt app without rewriting it."
 pubDate: 2026-11-15
 tags: ["ai", "agents", "vue", "nuxt", "architecture"]
-draft: true
+draft: false
 ---
 
 I've spent over a year building an app that started as an exploration task and grew into something much bigger. Most of it was written with AI agents, and now I want to put an AI agent *inside* it, one that helps users get real tasks and workflows done.
